@@ -1,5 +1,7 @@
 package com.grocery.app.controller;
 
+import com.grocery.app.dto.EntityMapper;
+import com.grocery.app.dto.ProductDTO;
 import com.grocery.app.model.Product;
 import com.grocery.app.service.ProductCategoryService;
 import com.grocery.app.service.ProductService;
@@ -41,13 +43,16 @@ public class ProductController {
      * @return the saved product
      */
     @PostMapping("/save")
-    public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
+    public ResponseEntity<ProductDTO> saveProduct(@RequestBody Product product) {
         if(product.getProductCategory().getCategoryId() != null){
             product.setProductCategory(productCategoryService.getProductCategoryById(product.getProductCategory().getCategoryId()));
         }
         product.setCreatedAt(LocalDateTime.now());
         product.setUpdatedAt(LocalDateTime.now());
-        return ResponseEntity.ok(productService.save(product));
+
+        Product savedProduct = productService.save(product);
+        ProductDTO productDTO = EntityMapper.toProductDto(savedProduct);
+        return ResponseEntity.ok(productDTO);
     }
 
     /**

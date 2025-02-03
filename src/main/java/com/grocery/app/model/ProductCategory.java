@@ -15,13 +15,10 @@ public class ProductCategory {
 
     private String categoryName;
 
-    @OneToMany(mappedBy = "productCategory", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Product> products;
 
-    public ProductCategory(Long categoryId, String categoryName, List<Product> products) {
+    public ProductCategory(Long categoryId, String categoryName) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
-        this.products = products;
     }
 
     public ProductCategory() {}
@@ -42,11 +39,4 @@ public class ProductCategory {
         this.categoryName = categoryName;
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
 }

@@ -32,7 +32,6 @@ public class Product {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
-        this.productCategory = productCategory;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
