@@ -1,6 +1,7 @@
 package com.grocery.app.controller;
 
 import com.grocery.app.model.Product;
+import com.grocery.app.service.ProductCategoryService;
 import com.grocery.app.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +16,11 @@ public class ProductController {
 
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
+    private final ProductCategoryService productCategoryService;
+
+    public ProductController(ProductService productService, ProductCategoryService productCategoryService) {
         this.productService = productService;
+        this.productCategoryService = productCategoryService;
     }
 
     /**
@@ -38,6 +42,9 @@ public class ProductController {
      */
     @PostMapping("/save")
     public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
+        if(product.getProductCategory().getCategoryId() != null){
+            product.setProductCategory(productCategoryService.getProductCategoryById(product.getProductCategory().getCategoryId()));
+        }
         product.setCreatedAt(LocalDateTime.now());
         product.setUpdatedAt(LocalDateTime.now());
         return ResponseEntity.ok(productService.save(product));

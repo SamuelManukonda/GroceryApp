@@ -33,4 +33,14 @@ public class ProductCategoryService {
     public ProductCategory saveCategory(ProductCategory productCategory) {
         return productCategoryRepository.save(productCategory);
     }
+
+    /**
+     * Retrieves a product category from the database by its ID.
+     *
+     * @param categoryId the ID of the category to be retrieved
+     * @return the category with the given ID if found, null otherwise
+     */
+    public ProductCategory getProductCategoryById(Long categoryId) {
+        return productCategoryRepository.findProductCategoryByCategoryId(categoryId);
+    }
 }
